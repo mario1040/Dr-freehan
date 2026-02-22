@@ -149,7 +149,7 @@ const Navbar = () => {
                layout 
                className={cn("relative transition-all duration-300", isScrolled ? "w-24" : "w-32")}
              >
-                <img src="/images/logo.png" alt="SF Touch" className="w-full h-auto object-contain" />
+                <img src="/blogo.png" alt="SF Touch" className="w-full h-auto object-contain" />
              </motion.div>
           </Link>
 

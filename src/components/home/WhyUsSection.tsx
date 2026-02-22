@@ -1,9 +1,8 @@
 import React from 'react';
 import { motion, useMotionTemplate, useMotionValue } from 'framer-motion';
-import { Stethoscope, Cpu, ClipboardList, Award, CheckCircle2 } from 'lucide-react';
+import { Stethoscope, Cpu, ClipboardList, Award, Sparkles, ArrowRight } from 'lucide-react';
 import { useLanguage } from '@/context/LanguageContext';
 
-// 1. تعريف النوع
 interface FeatureItem {
   id: number;
   icon: React.ElementType;
@@ -42,39 +41,41 @@ const WhyUsSection = () => {
   ];
 
   return (
-    <section className="relative py-24 bg-slate-50 overflow-hidden">
+    <section className="relative py-32 bg-white overflow-hidden">
       
-      {/* Background Magic */}
-      <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:24px_24px]"></div>
-      <div className="absolute left-0 right-0 top-0 -z-10 m-auto h-[310px] w-[310px] rounded-full bg-yellow-400 opacity-20 blur-[100px]"></div>
+      {/* ================= BACKGROUND MAGIC ================= */}
+      <div className="absolute inset-0 bg-[linear-gradient(to_right,#8080800a_1px,transparent_1px),linear-gradient(to_bottom,#8080800a_1px,transparent_1px)] bg-[size:32px_32px]" />
+      
+      {/* إضاءات خلفية غير منتظمة لتعطي عمقاً إبداعياً */}
+      <div className="absolute top-0 right-1/4 w-[400px] h-[400px] bg-amber-100/40 rounded-full blur-[120px] pointer-events-none" />
+      <div className="absolute bottom-0 left-1/4 w-[500px] h-[500px] bg-slate-100/60 rounded-full blur-[120px] pointer-events-none" />
 
       <div className="container mx-auto px-4 sm:px-6 relative z-10">
         
-        {/* Header */}
+        {/* ================= HEADER ================= */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.8 }}
-          className="text-center mb-20 max-w-3xl mx-auto"
+          viewport={{ once: true, margin: "-100px" }}
+          transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
+          className="text-center mb-24 max-w-3xl mx-auto flex flex-col items-center"
         >
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white border border-slate-200 shadow-sm mb-4">
-             <CheckCircle2 className="w-4 h-4 text-green-500" />
-             <span className="text-xs font-bold tracking-wide uppercase text-slate-600">
-               {isRTL ? 'لماذا SF Touch؟' : 'Why Choose Us?'}
-             </span>
+          {/* Premium Badge */}
+          <div className="flex items-center gap-2 px-4 py-2 rounded-full border border-amber-200/60 bg-amber-50/50 backdrop-blur-sm text-amber-700 text-sm font-bold tracking-widest uppercase shadow-sm mb-6">
+            <Sparkles className="w-4 h-4 text-amber-500" />
+            <span>{isRTL ? 'لماذا عياداتنا؟' : 'Why Choose Us?'}</span>
           </div>
           
-          <h2 className="text-4xl md:text-5xl font-bold text-slate-900 mb-6 font-cairo">
+          <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-slate-900 mb-6 font-cairo leading-[1.2]">
             {isRTL ? 'نصنع الفارق في' : 'Making a Difference in'} <br />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-yellow-600 to-yellow-500">
-              {isRTL ? 'عالم التجميل' : 'Aesthetic World'}
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-600 via-yellow-500 to-amber-600 animate-gradient-x">
+              {isRTL ? 'عالم التجميل' : 'The Aesthetic World'}
             </span>
           </h2>
         </motion.div>
 
-        {/* The Spotlight Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        {/* ================= CREATIVE GRID ================= */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8 pb-12 lg:pb-24">
           {features.map((feature, i) => (
             <SpotlightCard key={i} feature={feature} index={i} isRTL={isRTL} />
           ))}
@@ -96,83 +97,81 @@ const SpotlightCard = ({ feature, index, isRTL }: { feature: FeatureItem, index:
   }
 
   const Icon = feature.icon;
+  
+  // تأثير التدرج الإبداعي: البطاقات الفردية تنزل للأسفل قليلاً في الشاشات الكبيرة
+  const isOdd = index % 2 !== 0;
 
   return (
     <motion.div
       initial={{ opacity: 0, y: 50 }}
       whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }}
-      transition={{ duration: 0.5, delay: index * 0.1 }}
-      className="group relative border border-slate-200 bg-white shadow-xl shadow-slate-200/50 rounded-3xl overflow-hidden cursor-default"
+      viewport={{ once: true, margin: "-50px" }}
+      transition={{ duration: 0.8, delay: index * 0.15, ease: [0.16, 1, 0.3, 1] }}
+      className={`group relative h-full flex flex-col border border-slate-200/60 bg-white/60 backdrop-blur-xl shadow-xl shadow-slate-200/30 rounded-[2.5rem] overflow-hidden cursor-default transition-transform duration-500 hover:-translate-y-2 ${isOdd ? 'lg:translate-y-12' : ''}`}
       onMouseMove={handleMouseMove}
     >
-      {/* 1. Spotlight Effect Layer */}
+      {/* 1. Spotlight Background Glow */}
       <motion.div
-        className="pointer-events-none absolute -inset-px rounded-3xl opacity-0 transition duration-300 group-hover:opacity-100"
+        className="pointer-events-none absolute -inset-px rounded-[2.5rem] opacity-0 transition-opacity duration-500 group-hover:opacity-100"
         style={{
           background: useMotionTemplate`
             radial-gradient(
-              650px circle at ${mouseX}px ${mouseY}px,
-              rgba(234, 179, 8, 0.15),
+              600px circle at ${mouseX}px ${mouseY}px,
+              rgba(245, 158, 11, 0.08),
               transparent 80%
             )
           `,
         }}
       />
       
-      {/* 2. Spotlight Border Layer */}
+      {/* 2. Spotlight Animated Border */}
       <motion.div
-        className="pointer-events-none absolute -inset-px rounded-3xl opacity-0 transition duration-300 group-hover:opacity-100"
+        className="pointer-events-none absolute -inset-px rounded-[2.5rem] opacity-0 transition-opacity duration-500 group-hover:opacity-100 z-20"
         style={{
             background: useMotionTemplate`
               radial-gradient(
-                650px circle at ${mouseX}px ${mouseY}px,
-                rgba(234, 179, 8, 0.4),
-                transparent 40%
+                400px circle at ${mouseX}px ${mouseY}px,
+                rgba(245, 158, 11, 0.5),
+                transparent 60%
               )
             `,
             maskImage: `linear-gradient(black, black) content-box, linear-gradient(black, black)`,
             WebkitMaskImage: `linear-gradient(black, black) content-box, linear-gradient(black, black)`,
             maskComposite: `exclude`,
             WebkitMaskComposite: `xor`,
-            padding: `2px`,
+            padding: `1.5px`,
         }}
       />
 
       {/* 3. Card Content */}
-      <div className="relative h-full p-8 flex flex-col items-start z-10">
+      <div className="relative h-full p-8 md:p-10 flex flex-col items-start z-10">
         
-        {/* Icon */}
-        <div className="relative mb-6">
-           <div className="absolute inset-0 bg-yellow-500/20 rounded-2xl blur-lg scale-0 group-hover:scale-150 transition-transform duration-500" />
-           <div className="relative w-14 h-14 rounded-2xl bg-gradient-to-br from-slate-50 to-slate-100 border border-slate-200 flex items-center justify-center group-hover:border-yellow-500/50 group-hover:scale-110 transition-all duration-300">
-              <Icon className="w-7 h-7 text-slate-700 group-hover:text-yellow-600 transition-colors" />
+        {/* Floating Icon Container */}
+        <div className="relative mb-8">
+           <div className="absolute inset-0 bg-amber-400/20 rounded-full blur-xl scale-50 group-hover:scale-150 transition-transform duration-700 ease-out" />
+           <div className="relative w-16 h-16 rounded-full bg-gradient-to-br from-white to-slate-50 border border-slate-100 shadow-sm flex items-center justify-center group-hover:border-amber-200 group-hover:shadow-amber-500/20 transition-all duration-500 overflow-hidden">
+              <div className="absolute inset-0 bg-amber-500 translate-y-[100%] group-hover:translate-y-0 transition-transform duration-500 ease-in-out rounded-full" />
+              <Icon className="w-7 h-7 text-slate-700 group-hover:text-white transition-colors duration-500 relative z-10" />
            </div>
         </div>
 
-        {/* Title */}
-        <h3 className="text-xl font-bold text-slate-900 mb-3 group-hover:text-yellow-600 transition-colors font-cairo">
+        {/* Text Content */}
+        <h3 className="text-2xl font-bold text-slate-900 mb-4 group-hover:text-amber-600 transition-colors duration-300 font-cairo">
           {feature.title}
         </h3>
 
-        {/* Description */}
-        <p className="text-slate-500 text-sm leading-relaxed mb-8 flex-grow">
+        <p className="text-slate-500 text-sm leading-relaxed mb-10 flex-grow font-medium">
           {feature.description}
         </p>
 
-        {/* Bottom Number/Arrow */}
-        <div className="w-full flex justify-between items-center border-t border-slate-100 pt-4 mt-auto">
-           <span className="text-xs font-mono font-bold text-slate-300 group-hover:text-yellow-500 transition-colors">
+        {/* Bottom Indicator (Creative Line & Number) */}
+        <div className="w-full flex justify-between items-end mt-auto relative pt-6 before:absolute before:top-0 before:left-0 before:w-full before:h-[1px] before:bg-gradient-to-r before:from-transparent before:via-slate-200 before:to-transparent">
+           <span className="text-4xl font-light text-slate-200 font-cairo group-hover:text-amber-200 transition-colors duration-500 select-none">
              0{index + 1}
            </span>
            
-           {/* السهم السفلي: تم تصحيح الخطأ هنا باستخدام كلاس واحد ديناميكي */}
-           <div 
-             className={`w-8 h-8 rounded-full bg-slate-50 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300 transform ${isRTL ? 'translate-x-4 group-hover:translate-x-0' : '-translate-x-4 group-hover:translate-x-0'}`}
-           >
-             <div className={isRTL ? 'rotate-180' : ''}>
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-yellow-600"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
-             </div>
+           <div className={`w-10 h-10 rounded-full bg-slate-50 border border-slate-100 flex items-center justify-center opacity-0 group-hover:opacity-100 group-hover:bg-amber-50 group-hover:border-amber-200 transition-all duration-500 transform ${isRTL ? 'translate-x-4 group-hover:translate-x-0' : '-translate-x-4 group-hover:translate-x-0'}`}>
+              <ArrowRight className={`w-4 h-4 text-amber-600 transition-transform duration-500 ${isRTL ? 'rotate-180 group-hover:-translate-x-1' : 'group-hover:translate-x-1'}`} />
            </div>
         </div>
 

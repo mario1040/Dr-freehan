@@ -1,173 +1,171 @@
 import React from 'react';
-import { motion } from 'framer-motion';
+import { motion, Variants } from 'framer-motion';
 import { useLanguage } from '@/context/LanguageContext';
-import { Stethoscope, Apple, CalendarCheck, Share2, Linkedin, Instagram } from 'lucide-react';
-import { Button } from '@/components/ui/button';
+import { CalendarCheck, Linkedin, Instagram, Sparkles, Award, GraduationCap, Star } from 'lucide-react';
 
-interface Doctor {
-  id: number;
-  name: string;
-  nameAr: string;
-  specialty: string;
-  specialtyAr: string;
-  image: string; // رابط الصورة
-  icon: React.ElementType;
-}
+const DoctorProfile = () => {
+  const { t, isRTL } = useLanguage();
 
-const doctors: Doctor[] = [
-  {
-    id: 1,
-    name: 'Dr. Sally Eladawy',
-    nameAr: 'د. سالي العدوي',
-    specialty: 'Dermatology & Laser Specialist',
-    specialtyAr: 'أخصائية الأمراض الجلدية والليزر',
-    // صورة تخيلية (استبدلها بصورة الدكتورة الحقيقية)
-    image: 'images/drsally.png', 
-    icon: Stethoscope,
-  },
-  {
-    id: 2,
-    name: 'Dr. Freehan Zakria',
-    nameAr: 'د. فريحان زكريا',
-    specialty: 'Dermatology & Aesthetics Consultant',
-    specialtyAr: 'استشاري الجلدية والتجميل',
-    image: 'images/drfreehan.png',
-    icon: Stethoscope,
-  },
-  {
-    id: 3,
-    name: 'Dr. Mai Magdy',
-    nameAr: 'د. مي مجدي',
-    specialty: 'Clinical Nutrition Consultant',
-    specialtyAr: 'استشاري التغذية العلاجية',
-    image: 'images/drmay.png',
-    icon: Apple,
-  },
-  {
-    id: 4,
-    name: 'Dr. Loay Ghorab',
-    nameAr: 'د. لؤي غراب',
-    specialty: 'Body Contouring & Nutrition Expert',
-    specialtyAr: 'خبير التغذية ونحت القوام',
-    image: 'https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?q=80&w=2070&auto=format&fit=crop',
-    icon: Apple,
-  },
-];
+  // إعدادات حركة فاخرة مع حل مشكلة TypeScript باستخدام Variants وتحديد نوع المصفوفة
+  const fadeUp: Variants = {
+    hidden: { opacity: 0, y: 40 },
+    visible: { 
+      opacity: 1, 
+      y: 0, 
+      transition: { 
+        duration: 1, 
+        ease: [0.16, 1, 0.3, 1] as [number, number, number, number] 
+      } 
+    }
+  };
 
-const Doctors = () => {
-  const { t, language, isRTL } = useLanguage();
+  const container: Variants = {
+    visible: { transition: { staggerChildren: 0.15 } }
+  };
 
   return (
-    <>
-      {/* ================= HERO SECTION ================= */}
-      <section className="relative pt-40 pb-20 overflow-hidden bg-[#05151F]">
-        {/* الخلفية المزخرفة */}
-        <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-20 mix-blend-overlay"></div>
-        <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-yellow-500/10 rounded-full blur-[120px] -translate-y-1/2 translate-x-1/2"></div>
-        <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-blue-500/10 rounded-full blur-[120px] translate-y-1/3 -translate-x-1/3"></div>
+    <section className="relative min-h-screen bg-slate-50 overflow-hidden pt-32 pb-24 lg:pt-40">
+      
+      {/* ================= BACKGROUND ELEMENTS ================= */}
+      <div className="absolute inset-0 bg-[linear-gradient(to_right,#8080800a_1px,transparent_1px),linear-gradient(to_bottom,#8080800a_1px,transparent_1px)] bg-[size:32px_32px]" />
+      
+      {/* إضاءات خلفية بلون ذهبي/عنبري لإبراز الفخامة */}
+      <div className="absolute top-0 right-0 w-[50vw] h-[50vw] bg-amber-100/50 rounded-full blur-[120px] -translate-y-1/4 translate-x-1/4 pointer-events-none" />
+      <div className="absolute bottom-0 left-0 w-[40vw] h-[40vw] bg-slate-200/50 rounded-full blur-[100px] translate-y-1/4 -translate-x-1/4 pointer-events-none" />
 
-        <div className="container relative z-10 px-4 mx-auto text-center">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            className="max-w-3xl mx-auto"
-          >
-            <span className="inline-block py-1 px-3 rounded-full bg-white/5 border border-white/10 text-yellow-500 text-xs font-bold tracking-wider uppercase mb-6 backdrop-blur-md">
-              {isRTL ? 'فريقنا الطبي' : 'Our Medical Team'}
-            </span>
-            <h1 className="text-4xl md:text-6xl font-bold text-white mb-6 font-cairo">
-              {isRTL ? 'نخبة من' : 'Elite of'} <br />
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 to-yellow-600">
-                {isRTL ? 'أفضل الأطباء' : 'Best Doctors'}
-              </span>
-            </h1>
-            <p className="text-lg text-slate-400 leading-relaxed">
-              {isRTL 
-                ? 'فريق متكامل من الاستشاريين والأخصائيين ذوي الخبرة، يجمعون بين العلم والفن لتقديم أفضل النتائج.'
-                : 'A complete team of experienced consultants and specialists, combining science and art to deliver the best results.'
-              }
-            </p>
-          </motion.div>
-        </div>
-      </section>
-
-      {/* ================= DOCTORS GRID ================= */}
-      <section className="py-24 bg-slate-50 relative">
-        <div className="container px-4 mx-auto">
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {doctors.map((doctor, index) => (
-              <DoctorCard key={doctor.id} doctor={doctor} index={index} isRTL={isRTL} />
-            ))}
-          </div>
-        </div>
-      </section>
-    </>
-  );
-};
-
-// ================= DOCTOR CARD COMPONENT =================
-const DoctorCard = ({ doctor, index, isRTL }: { doctor: Doctor, index: number, isRTL: boolean }) => {
-  return (
-    <motion.div
-      initial={{ opacity: 0, y: 50 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }}
-      transition={{ duration: 0.6, delay: index * 0.1 }}
-      className="group relative bg-white rounded-[2rem] overflow-hidden shadow-xl hover:shadow-2xl hover:shadow-yellow-500/10 transition-all duration-500"
-    >
-      {/* 1. Image Container */}
-      <div className="relative h-[400px] w-full overflow-hidden bg-slate-200">
-        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent z-10 opacity-60 group-hover:opacity-80 transition-opacity duration-500" />
+      <div className="container mx-auto px-4 sm:px-6 relative z-10">
         
-        <img 
-          src={doctor.image} 
-          alt={isRTL ? doctor.nameAr : doctor.name}
-          className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"
-        />
-
-        {/* Social Icons (Appear on Hover) */}
-        <div className="absolute top-4 right-4 z-20 flex flex-col gap-2 translate-x-10 opacity-0 group-hover:translate-x-0 group-hover:opacity-100 transition-all duration-500 delay-100">
-          <button className="w-10 h-10 rounded-full bg-white/20 backdrop-blur-md flex items-center justify-center text-white hover:bg-yellow-500 hover:text-black transition-colors">
-            <Linkedin className="w-4 h-4" />
-          </button>
-          <button className="w-10 h-10 rounded-full bg-white/20 backdrop-blur-md flex items-center justify-center text-white hover:bg-yellow-500 hover:text-black transition-colors">
-            <Instagram className="w-4 h-4" />
-          </button>
-        </div>
-
-        {/* Badge (Specialty Icon) */}
-        <div className={`absolute top-4 left-4 z-20 w-12 h-12 rounded-xl bg-white/10 backdrop-blur-md border border-white/20 flex items-center justify-center text-yellow-400 group-hover:bg-yellow-500 group-hover:text-black transition-all duration-300`}>
-           <doctor.icon className="w-6 h-6" />
-        </div>
-      </div>
-
-      {/* 2. Text Content (Floating Up) */}
-      <div className="absolute bottom-0 left-0 right-0 p-6 z-20 transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
-        <div className="text-center">
-          <h3 className="text-xl font-bold text-white mb-1 font-cairo">
-            {isRTL ? doctor.nameAr : doctor.name}
-          </h3>
-          <p className="text-sm text-yellow-400 font-medium mb-4 opacity-90">
-            {isRTL ? doctor.specialtyAr : doctor.specialty}
-          </p>
+        <div className="grid lg:grid-cols-12 gap-12 lg:gap-20 items-center">
           
-          {/* Action Button (Hidden initially, appears on hover) */}
-          <div className="grid grid-rows-[0fr] group-hover:grid-rows-[1fr] transition-[grid-template-rows] duration-500">
-            <div className="overflow-hidden">
-               <Button className="w-full rounded-full bg-white text-black hover:bg-yellow-500 font-bold mt-2">
-                 <CalendarCheck className="w-4 h-4 me-2" />
-                 {isRTL ? 'حجز موعد' : 'Book Appointment'}
-               </Button>
+          {/* ================= RIGHT/LEFT: IMAGE SPOTLIGHT (5 Cols) ================= */}
+          <motion.div 
+            initial={{ opacity: 0, scale: 0.95, x: isRTL ? 50 : -50 }}
+            animate={{ opacity: 1, scale: 1, x: 0 }}
+            transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] as [number, number, number, number] }}
+            className="lg:col-span-5 relative flex justify-center lg:justify-end order-1"
+          >
+            {/* إطار هندسي زخرفي خلف الصورة */}
+            <div className="absolute inset-0 border border-amber-200/60 rounded-t-[20rem] rounded-b-[4rem] scale-[1.05] -z-10 transition-transform duration-700 hover:scale-[1.08]" />
+
+            <div className="relative w-full max-w-md h-[600px] lg:h-[750px] rounded-t-[20rem] rounded-b-[4rem] overflow-hidden shadow-2xl shadow-slate-300/60 ring-1 ring-black/5 group">
+               {/* مسار صورة الدكتورة فريحان */}
+               <img 
+                 src="images/drfreehan.png" 
+                 alt={isRTL ? "د. فريحان زكريا" : "Dr. Freehan Zakria"} 
+                 className="w-full h-full object-cover transition-transform duration-[2s] group-hover:scale-105"
+                 onError={(e) => {
+                   (e.target as HTMLImageElement).src = "https://images.unsplash.com/photo-1559839734-2b71ea197ec2?q=80&w=2070&auto=format&fit=crop";
+                 }}
+               />
+               
+               {/* Overlay تدرج لوني ناعم من الأسفل */}
+               <div className="absolute inset-0 bg-gradient-to-t from-slate-900/80 via-slate-900/10 to-transparent opacity-60" />
+
+               {/* الشارة العائمة (التقييم) */}
+               <motion.div 
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.8, duration: 0.8 }}
+                  className={`absolute bottom-10 ${isRTL ? 'right-6' : 'left-6'} bg-white/90 backdrop-blur-md p-4 rounded-2xl shadow-[0_20px_40px_-15px_rgba(0,0,0,0.15)] border border-white z-20 flex items-center gap-3`}
+               >
+                  <div className="w-12 h-12 rounded-full bg-amber-50 flex items-center justify-center shrink-0">
+                     <Star className="w-6 h-6 text-amber-500 fill-amber-500" />
+                  </div>
+                  <div>
+                     <p className="text-slate-900 font-extrabold text-lg">5.0 / 5</p>
+                     <p className="text-slate-500 text-xs font-medium">{isRTL ? 'تقييم العملاء' : 'Patients Rating'}</p>
+                  </div>
+               </motion.div>
+
+               {/* روابط التواصل الاجتماعي على الصورة */}
+               <div className={`absolute top-10 ${isRTL ? 'left-6' : 'right-6'} flex flex-col gap-3 z-20`}>
+                  <a href="#" className="w-10 h-10 rounded-full bg-white/20 backdrop-blur-md border border-white/30 flex items-center justify-center text-white hover:bg-amber-500 hover:border-amber-500 transition-all duration-300 hover:scale-110 shadow-lg">
+                     <Instagram className="w-4 h-4" />
+                  </a>
+                  <a href="#" className="w-10 h-10 rounded-full bg-white/20 backdrop-blur-md border border-white/30 flex items-center justify-center text-white hover:bg-amber-500 hover:border-amber-500 transition-all duration-300 hover:scale-110 shadow-lg">
+                     <Linkedin className="w-4 h-4" />
+                  </a>
+               </div>
             </div>
-          </div>
+          </motion.div>
+
+          {/* ================= LEFT/RIGHT: TEXT CONTENT (7 Cols) ================= */}
+          <motion.div 
+            variants={container}
+            initial="hidden"
+            animate="visible"
+            className="lg:col-span-7 flex flex-col items-start text-start order-2"
+          >
+            {/* الشارة العلوية (Badge) */}
+            <motion.div variants={fadeUp} className="mb-6">
+               <span className="flex items-center gap-2 px-4 py-2 rounded-full border border-amber-200/60 bg-amber-50/50 backdrop-blur-sm text-amber-700 text-sm font-bold tracking-widest uppercase shadow-sm">
+                 <Sparkles className="w-4 h-4 text-amber-500" />
+                 {isRTL ? 'المؤسس والمدير الطبي' : 'Founder & Medical Director'}
+               </span>
+            </motion.div>
+
+            {/* الاسم والتخصص */}
+            <motion.h1 variants={fadeUp} className="text-5xl md:text-6xl lg:text-[4.5rem] font-bold text-slate-900 leading-[1.1] mb-4 font-cairo">
+              {isRTL ? 'د. فريحان زكريا' : 'Dr. Freehan Zakria'}
+            </motion.h1>
+            
+            <motion.h2 variants={fadeUp} className="text-2xl md:text-3xl font-medium text-transparent bg-clip-text bg-gradient-to-r from-amber-600 to-amber-500 mb-8 font-cairo">
+               {isRTL ? 'استشاري الجلدية والتجميل' : 'Dermatology & Aesthetics Consultant'}
+            </motion.h2>
+
+            {/* نبذة عن الدكتورة */}
+            <motion.p variants={fadeUp} className="text-lg text-slate-500 leading-relaxed mb-10 max-w-2xl font-medium">
+               {isRTL 
+                  ? 'تُعد الدكتورة فريحان زكريا من أبرز الأسماء في عالم التجميل والعناية بالبشرة. بخبرة تمتد لسنوات طويلة، تجمع بين الدقة الطبية واللمسة الفنية لإبراز الجمال الطبيعي لكل حالة. تؤمن بأن التجميل ليس مجرد إجراء، بل هو رحلة لاستعادة الثقة بالنفس والظهور بأفضل صورة ممكنة.'
+                  : 'Dr. Freehan Zakria is one of the most prominent names in the world of aesthetics and skin care. With years of experience, she combines medical precision with an artistic touch to highlight the natural beauty of each case.'}
+            </motion.p>
+
+            {/* مؤهلات الدكتورة (Cards) */}
+            <motion.div variants={fadeUp} className="grid sm:grid-cols-2 gap-4 w-full max-w-2xl mb-12">
+               <div className="p-5 rounded-2xl bg-white border border-slate-100 shadow-sm flex items-start gap-4 group hover:border-amber-200 transition-colors">
+                  <div className="w-12 h-12 rounded-xl bg-amber-50 flex items-center justify-center shrink-0 group-hover:bg-amber-500 transition-colors">
+                     <GraduationCap className="w-6 h-6 text-amber-600 group-hover:text-white transition-colors" />
+                  </div>
+                  <div>
+                     <h4 className="text-slate-900 font-bold mb-1 font-cairo">{isRTL ? 'الشهادات العليا' : 'Higher Education'}</h4>
+                     <p className="text-sm text-slate-500 font-medium">{isRTL ? 'زميل الأكاديمية الأمريكية للطب التجميلي' : 'Fellow of the American Academy of Aesthetic Medicine'}</p>
+                  </div>
+               </div>
+
+               <div className="p-5 rounded-2xl bg-white border border-slate-100 shadow-sm flex items-start gap-4 group hover:border-amber-200 transition-colors">
+                  <div className="w-12 h-12 rounded-xl bg-amber-50 flex items-center justify-center shrink-0 group-hover:bg-amber-500 transition-colors">
+                     <Award className="w-6 h-6 text-amber-600 group-hover:text-white transition-colors" />
+                  </div>
+                  <div>
+                     <h4 className="text-slate-900 font-bold mb-1 font-cairo">{isRTL ? 'الخبرة العملية' : 'Practical Experience'}</h4>
+                     <p className="text-sm text-slate-500 font-medium">{isRTL ? '+10 سنوات من الخبرة والآلاف من الحالات الناجحة' : '+10 Years of experience & thousands of successful cases'}</p>
+                  </div>
+               </div>
+            </motion.div>
+
+            {/* أزرار الحجز */}
+            <motion.div variants={fadeUp} className="flex flex-wrap items-center gap-4">
+               <a href="tel:0572260062">
+                  <button className="px-8 py-4 bg-slate-900 text-white rounded-full hover:bg-slate-800 transition-all duration-300 shadow-xl shadow-slate-900/20 flex items-center gap-3 group active:scale-95 border border-slate-700">
+                     <CalendarCheck className="w-5 h-5 text-amber-400 group-hover:scale-110 transition-transform" />
+                     <span className="font-bold tracking-wide">{isRTL ? 'احجزي استشارتك مع الدكتورة' : 'Book Consultation'}</span>
+                  </button>
+               </a>
+            </motion.div>
+            
+            {/* اقتباس أو توقيع (لمسة فاخرة) */}
+            <motion.div variants={fadeUp} className="mt-12 pt-8 border-t border-slate-200/60 w-full max-w-2xl">
+               <p className="text-2xl text-slate-400 italic font-cairo leading-relaxed">
+                  "{isRTL ? 'هدفي الأساسي هو أن تنظري في المرآة وتري النسخة الأجمل والأكثر ثقة من نفسك.' : 'My ultimate goal is for you to look in the mirror and see the most beautiful, confident version of yourself.'}"
+               </p>
+            </motion.div>
+
+          </motion.div>
+
         </div>
       </div>
-
-      {/* Border Effect */}
-      <div className="absolute inset-0 border-2 border-transparent group-hover:border-yellow-500/50 rounded-[2rem] transition-colors duration-500 pointer-events-none z-30" />
-    </motion.div>
+    </section>
   );
 };
 
-export default Doctors;
+export default DoctorProfile;
