@@ -3,12 +3,18 @@ import ServicesSection from '@/components/home/ServicesSection';
 import TechnologiesSection from '@/components/home/TechnologiesSection';
 import WhyUsSection from '@/components/home/WhyUsSection';
 import CTASection from '@/components/home/CTASection';
+import VideoHero from '@/components/home/VideoHero';
+import RealResults from '@/components/home/RealResults';
+import VideoGallery from '@/components/home/VideoGallery';
 
 const Index = () => {
   return (
     <>
-      <HeroSection />
+     <VideoHero />
+      {/* <HeroSection /> */}
+      <RealResults />
       <ServicesSection />
+      <VideoGallery />
       {/* <TechnologiesSection /> */}
       <WhyUsSection />
       <CTASection />
